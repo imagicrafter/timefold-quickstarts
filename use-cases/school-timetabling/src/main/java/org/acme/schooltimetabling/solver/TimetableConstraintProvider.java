@@ -23,15 +23,12 @@ import static ai.timefold.solver.core.api.score.stream.Joiners.overlapping;
 
 import org.acme.schooltimetabling.domain.Lesson;
 import org.acme.schooltimetabling.domain.Timeslot;
-//import org.acme.schooltimetabling.domain.Lesson.getCount;
-//import org.acme.schooltimetabling.domain.Room;
-//import org.acme.schooltimetabling.domain.Timeslot;
-import org.acme.schooltimetabling.solver.justifications.RoomConflictJustification;
-import org.acme.schooltimetabling.solver.justifications.StudentGroupConflictJustification;
-import org.acme.schooltimetabling.solver.justifications.StudentGroupSubjectVarietyJustification;
-import org.acme.schooltimetabling.solver.justifications.TeacherConflictJustification;
-import org.acme.schooltimetabling.solver.justifications.TeacherRoomStabilityJustification;
-import org.acme.schooltimetabling.solver.justifications.TeacherTimeEfficiencyJustification;
+//import org.acme.schooltimetabling.solver.justifications.RoomConflictJustification;
+//import org.acme.schooltimetabling.solver.justifications.StudentGroupConflictJustification;
+//import org.acme.schooltimetabling.solver.justifications.StudentGroupSubjectVarietyJustification;
+//import org.acme.schooltimetabling.solver.justifications.TeacherConflictJustification;
+//import org.acme.schooltimetabling.solver.justifications.TeacherRoomStabilityJustification;
+//import org.acme.schooltimetabling.solver.justifications.TeacherTimeEfficiencyJustification;
 import org.hibernate.mapping.Join;
 
 public class TimetableConstraintProvider implements ConstraintProvider {
@@ -61,6 +58,7 @@ public class TimetableConstraintProvider implements ConstraintProvider {
         };
     }
 
+/*
     Constraint roomConflict(ConstraintFactory constraintFactory) {
         // A room can accommodate at most one lesson at the same time.
         return constraintFactory
@@ -75,6 +73,8 @@ public class TimetableConstraintProvider implements ConstraintProvider {
                 .justifyWith((lesson1, lesson2, score) -> new RoomConflictJustification(lesson1.getRoom(), lesson1, lesson2))
                 .asConstraint("Room conflict");
     }
+
+*/
 
     Constraint kpPerShiftMaxGtFive(ConstraintFactory constraintFactory) {
         // A room can accommodate at most one lesson at the same time.
@@ -314,13 +314,13 @@ public class TimetableConstraintProvider implements ConstraintProvider {
                         Joiners.equal((lesson) -> lesson.getTeacher()))
                 //.filter((lesson1, lesson2) -> lesson1.getRoom() != lesson2.getRoom() && lesson1.getTimeslot() != lesson2.getTimeslot())
                 .penalize(HardSoftScore.ONE_HARD)
-                .justifyWith(
-                        (lesson1, lesson2, score) -> new TeacherConflictJustification(lesson1.getTeacher(), lesson1, lesson2))
+               // .justifyWith(
+               //         (lesson1, lesson2, score) -> new TeacherConflictJustification(lesson1.getTeacher(), lesson1, lesson2))
                 .asConstraint("Scout KP conflict");
     }
 
 
-
+/* 
     Constraint teacherConflict(ConstraintFactory constraintFactory) {
         // A teacher can teach at most one lesson at the same time.
         return constraintFactory
@@ -354,6 +354,7 @@ public class TimetableConstraintProvider implements ConstraintProvider {
                 .justifyWith((lesson1, lesson2, score) -> new TeacherRoomStabilityJustification(lesson1.getTeacher(), lesson1, lesson2))
                 .asConstraint("Teacher room stability");
     }
+*/
 
     Constraint blockDayOneAndDayTenKP(ConstraintFactory constraintFactory) {
         // No KP should be scheduled on Day One Breakfast or Lunch
